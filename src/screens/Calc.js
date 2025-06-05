@@ -6,6 +6,7 @@ import {
   Button,
   StyleSheet,
   ScrollView,
+  Alert,
 } from "react-native";
 import { calcNewDeviceCost } from "../services/calcService";
 
@@ -17,12 +18,19 @@ export default function Calc({ navigation }) {
   const [power, setPower] = useState("");
   const [hours, setHours] = useState("");
 
+  const parseNumber = (value) => Number(value.replace(",", "."));
+
   const handleCalc = () => {
+    if (!bill1 || !bill2 || !bill3 || !kwh || !power || !hours) {
+      Alert.alert("Atenção", "Por favor, preencha todos os campos.");
+      return;
+    }
+
     const result = calcNewDeviceCost({
-      bills: [Number(bill1), Number(bill2), Number(bill3)],
-      kwh: Number(kwh),
-      power: Number(power),
-      hoursPerDay: Number(hours),
+      bills: [parseNumber(bill1), parseNumber(bill2), parseNumber(bill3)],
+      kwh: parseNumber(kwh),
+      power: parseNumber(power),
+      hoursPerDay: parseNumber(hours),
     });
 
     navigation.navigate("Resultado", { result });
@@ -38,18 +46,21 @@ export default function Calc({ navigation }) {
         placeholder="Conta 1"
         keyboardType="numeric"
         onChangeText={setBill1}
+        value={bill1}
       />
       <TextInput
         style={styles.input}
         placeholder="Conta 2"
         keyboardType="numeric"
         onChangeText={setBill2}
+        value={bill2}
       />
       <TextInput
         style={styles.input}
         placeholder="Conta 3"
         keyboardType="numeric"
         onChangeText={setBill3}
+        value={bill3}
       />
 
       <Text>Valor do kWh (R$)</Text>
@@ -58,6 +69,7 @@ export default function Calc({ navigation }) {
         placeholder="Ex: 0.85"
         keyboardType="numeric"
         onChangeText={setKwh}
+        value={kwh}
       />
 
       <Text>Potência do aparelho (Watts)</Text>
@@ -66,6 +78,7 @@ export default function Calc({ navigation }) {
         placeholder="Ex: 1000"
         keyboardType="numeric"
         onChangeText={setPower}
+        value={power}
       />
 
       <Text>Uso diário (Horas)</Text>
@@ -74,6 +87,7 @@ export default function Calc({ navigation }) {
         placeholder="Ex: 2"
         keyboardType="numeric"
         onChangeText={setHours}
+        value={hours}
       />
 
       <Button title="Calcular" onPress={handleCalc} />
@@ -84,5 +98,10 @@ export default function Calc({ navigation }) {
 const styles = StyleSheet.create({
   container: { padding: 20, gap: 10 },
   title: { fontSize: 20, fontWeight: "bold", marginBottom: 10 },
-  input: { borderWidth: 1, borderColor: "#ccc", padding: 8, borderRadius: 5 },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 8,
+    borderRadius: 5,
+  },
 });
