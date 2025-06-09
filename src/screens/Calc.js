@@ -1,9 +1,17 @@
 import { useState } from "react";
-import { ScrollView, Button, Alert, StyleSheet } from "react-native";
+import {
+  ScrollView,
+  Button,
+  Alert,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import { calcNewDeviceCost } from "../services/calcService";
 import FormCalc from "../components/FormCalc";
 import ResultCard from "../components/ResultCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function Calc() {
   const [bill1, setBill1] = useState("");
@@ -53,6 +61,16 @@ export default function Calc() {
     setResult(calcResult);
     await saveToHistory(title, calcResult);
   };
+  const handleReset = () => {
+    setBill1("");
+    setBill2("");
+    setBill3("");
+    setKwh("");
+    setPower("");
+    setHours("");
+    setTitle("");
+    setResult(null);
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -75,11 +93,27 @@ export default function Calc() {
 
       <ResultCard result={result} />
 
-      <Button title="Calcular" onPress={handleCalc} />
+      <View style={styles.buttonRow}>
+        <Button title="Calcular" onPress={handleCalc} />
+        <TouchableOpacity onPress={handleReset} style={styles.resetButton}>
+          <Ionicons name="refresh-circle" size={36} color="#555" />
+        </TouchableOpacity>
+      </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: { padding: 20, gap: 10, paddingTop: 70 },
+  buttonRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 10,
+    gap: 20,
+  },
+  resetButton: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
