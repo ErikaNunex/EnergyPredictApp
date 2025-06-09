@@ -5,7 +5,7 @@ export default function Home({ navigation }) {
     <View style={styles.container}>
       <Text style={styles.title}>Energy Predict App ⚡</Text>
       <Button
-        title="Iniciar cálculo"
+        title="Iniciar simulação."
         onPress={() => navigation.navigate("Main")}
       />
     </View>

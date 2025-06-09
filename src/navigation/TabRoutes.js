@@ -26,8 +26,8 @@ export default function TabRoutes() {
         tabBarInactiveTintColor: "gray",
       })}
     >
-      {/* <Tab.Screen name="Histórico" component={History} /> */}
       <Tab.Screen name="Cálculo" component={Calc} />
+      <Tab.Screen name="Histórico" component={History} />
       <Tab.Screen name="Ajuda" component={Help} />
     </Tab.Navigator>
   );

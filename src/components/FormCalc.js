@@ -9,6 +9,8 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function FormCalc({
+  title,
+  setTitle,
   bill1,
   setBill1,
   bill2,
@@ -31,6 +33,13 @@ export default function FormCalc({
     <View style={styles.container}>
       <Text style={styles.title}>Preencha seus dados</Text>
 
+      <Text>Título da simulação</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Ex: Geladeira nova"
+        onChangeText={setTitle}
+        value={title}
+      />
       <Text>Últimas 3 contas (R$)</Text>
       <TextInput
         style={styles.input}

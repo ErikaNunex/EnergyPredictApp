@@ -3,6 +3,7 @@ import { ScrollView, Button, Alert, StyleSheet } from "react-native";
 import { calcNewDeviceCost } from "../services/calcService";
 import FormCalc from "../components/FormCalc";
 import ResultCard from "../components/ResultCard";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Calc() {
   const [bill1, setBill1] = useState("");
@@ -11,13 +12,33 @@ export default function Calc() {
   const [kwh, setKwh] = useState("");
   const [power, setPower] = useState("");
   const [hours, setHours] = useState("");
+  const [title, setTitle] = useState("");
 
   const [result, setResult] = useState(null);
 
   const parseNumber = (value) => Number(value.replace(",", "."));
+  const saveToHistory = async (title, result) => {
+    try {
+      const previous = await AsyncStorage.getItem("history");
+      const parsed = previous ? JSON.parse(previous) : [];
 
-  const handleCalc = () => {
-    if (!bill1 || !bill2 || !bill3 || !kwh || !power || !hours) {
+      const updated = [
+        ...parsed,
+        {
+          title,
+          timestamp: new Date().toISOString(),
+          ...result,
+        },
+      ];
+
+      await AsyncStorage.setItem("history", JSON.stringify(updated));
+    } catch (err) {
+      console.error("Erro ao salvar histórico:", err);
+    }
+  };
+
+  const handleCalc = async () => {
+    if (!title || !bill1 || !bill2 || !bill3 || !kwh || !power || !hours) {
       Alert.alert("Atenção", "Por favor, preencha todos os campos.");
       return;
     }
@@ -30,11 +51,14 @@ export default function Calc() {
     });
 
     setResult(calcResult);
+    await saveToHistory(title, calcResult);
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <FormCalc
+        title={title}
+        setTitle={setTitle}
         bill1={bill1}
         setBill1={setBill1}
         bill2={bill2}
