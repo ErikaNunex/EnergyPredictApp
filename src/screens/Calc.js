@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {
   ScrollView,
-  Button,
+  Text,
   Alert,
   StyleSheet,
   View,
@@ -94,9 +94,11 @@ export default function Calc() {
       <ResultCard result={result} />
 
       <View style={styles.buttonRow}>
-        <Button title="Calcular" onPress={handleCalc} />
         <TouchableOpacity onPress={handleReset} style={styles.resetButton}>
-          <Ionicons name="refresh-circle" size={36} color="#555" />
+          <Text style={styles.calcButtonText}>Limpar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.calcButton} onPress={handleCalc}>
+          <Text style={styles.calcButtonText}>Calcular</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -107,13 +109,26 @@ const styles = StyleSheet.create({
   container: { padding: 20, gap: 10, paddingTop: 70 },
   buttonRow: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
+    gap: 8,
+    justifyContent: "space-around",
     marginTop: 10,
-    gap: 20,
+  },
+  calcButton: {
+    backgroundColor: "#F27405",
+    paddingVertical: 12,
+    paddingHorizontal: 50,
+    borderRadius: 25,
+  },
+  calcButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
   },
   resetButton: {
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: "#592202",
+    paddingVertical: 12,
+    paddingHorizontal: 50,
+    borderRadius: 25,
   },
 });

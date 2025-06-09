@@ -47,7 +47,7 @@ export default function History() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Histórico de Cálculos</Text>
+      <Text style={styles.title}>Histórico de simulações</Text>
 
       {history.length === 0 ? (
         <Text style={styles.empty}>Nenhum cálculo salvo.</Text>

@@ -22,7 +22,7 @@ export default function TabRoutes() {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: "#3B82F6",
+        tabBarActiveTintColor: "#F27405",
         tabBarInactiveTintColor: "gray",
       })}
     >
