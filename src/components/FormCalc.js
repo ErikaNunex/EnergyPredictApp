@@ -1,4 +1,12 @@
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function FormCalc({
   bill1,
@@ -14,6 +22,11 @@ export default function FormCalc({
   hours,
   setHours,
 }) {
+  const navigation = useNavigation();
+
+  const goToHelp = () => {
+    navigation.navigate("Ajuda");
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Preencha seus dados</Text>
@@ -41,7 +54,12 @@ export default function FormCalc({
         value={bill3}
       />
 
-      <Text>Valor do kWh (R$)</Text>
+      <View style={styles.labelRow}>
+        <Text>Valor do kWh (R$)</Text>
+        <TouchableOpacity onPress={goToHelp} style={styles.helpIcon}>
+          <Ionicons name="help-circle-outline" size={18} color="#3B82F6" />
+        </TouchableOpacity>
+      </View>
       <TextInput
         style={styles.input}
         placeholder="Ex: 0,85"
@@ -79,5 +97,13 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     padding: 8,
     borderRadius: 5,
+  },
+  helpIcon: {
+    paddingHorizontal: 4,
+  },
+  labelRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
   },
 });

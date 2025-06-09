@@ -57,5 +57,5 @@ export default function Calc() {
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 20, gap: 10 },
+  container: { padding: 20, gap: 10, paddingTop: 70 },
 });
